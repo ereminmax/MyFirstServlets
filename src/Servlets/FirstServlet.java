@@ -11,10 +11,10 @@ import java.io.PrintWriter;
 /**
  * Created by jacksolovey on 11.11.2015.
  */
-//@WebServlet(name = "FirstServlet")
+//@WebServlet(name = "FirstServlet") //we use web.xml instead
 public class FirstServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //w
+        //use doGet anyway
         doGet(request, response);
     }
 
