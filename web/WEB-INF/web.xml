@@ -11,4 +11,21 @@
         <servlet-name>FirstServlet</servlet-name>
         <url-pattern>/FirstServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Counter</servlet-name>
+        <servlet-class>Servlets.Counter</servlet-class>
+        <init-param>
+            <param-name>countFile</param-name>
+            <param-value>C:\Users\Максим\Google Диск\JAVA EE\Projects\web\WEB-INF\tmp\countFile.ser</param-value>
+        </init-param>
+        <init-param>
+            <param-name>interval</param-name>
+            <param-value>20000</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Counter</servlet-name>
+        <url-pattern>/Counter</url-pattern>
+    </servlet-mapping>
 </web-app>

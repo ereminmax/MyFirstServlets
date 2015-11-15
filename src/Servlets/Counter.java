@@ -10,16 +10,17 @@ import java.io.*;
 import java.util.HashMap;
 
 /**
- * Created by jacksolovey on 14.11.2015.
+ * Created by Max Eremin on 14.11.2015.
  */
-@WebServlet(name = "Counter")
+//@WebServlet(name = "Counter")
 public class Counter extends HttpServlet {
     private HashMap countMap;
     private File countFile;
-    private int interval;
+    private long interval;
     private long lastSaveTime;
 
     public static final String PARAMETER = "counter";
+    public static final String ATTRIBUTE = "Servlets.Counter.counter";
 
     //инициализируем начальные данные
     public void init() throws ServletException {
@@ -30,7 +31,7 @@ public class Counter extends HttpServlet {
             lastSaveTime = System.currentTimeMillis();
             loadState();
         } catch(Exception ex) {
-            throw new ServletException("Ошибка при инициализации сервлета: " + ex.getMessage());
+            throw new ServletException("Ошибка при инициализации сервлета: " + ex.getMessage(), ex);
         }
     }
 
@@ -74,8 +75,9 @@ public class Counter extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String counterName = request.getParameter("PARAMETER"); // считаем имя счетчика из параметра запроса
-        if (counterName == null) counterName = request.getRequestURI(); // иначе создадим новый
+        String counterName = request.getParameter(PARAMETER); // считаем имя счетчика из параметра запроса
+        if (counterName == null) request.getAttribute(ATTRIBUTE); // иначе считываем атрибут
+        if (counterName == null) counterName = request.getRequestURI(); // иначе создадим новый на основе URL
         Integer count; // счетчик
 
         // синхронизация предотвращает одновременное обновление хештаблицы несколькими потоками
@@ -83,7 +85,7 @@ public class Counter extends HttpServlet {
             count = (Integer) countMap.get("counterName"); // пытаемся извлечь значение счетчика
             if (count != null) count++; // увеличиваем если там чтото было
             else {
-                log("Создаем новый счетчик " + counterName); // запишем это в файл логов
+                log("Создаем новый счетчик " + counterName); // запишем название в \logs с именем URL см выше
                 count = 1; // начнем отсчет с 1
             }
             countMap.put(counterName, count); // сохраняем ключ-значение в хештаблицу

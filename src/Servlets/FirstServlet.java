@@ -27,6 +27,6 @@ public class FirstServlet extends HttpServlet {
         response.setContentType("text/html");
         //make output stream
         PrintWriter out = response.getWriter();
-        out.println("Hello, " + value + "!");
+        out.println("Hello, " + value + System.currentTimeMillis());
     }
 }
