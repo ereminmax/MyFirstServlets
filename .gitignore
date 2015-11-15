@@ -47,7 +47,7 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 ### Java template
-*.class
+#*.class I commented this beacause of warning which says this element is covered by out. I think it's ok
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
