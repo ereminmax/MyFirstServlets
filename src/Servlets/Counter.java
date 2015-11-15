@@ -86,6 +86,17 @@ public class Counter extends HttpServlet {
                 log("Создаем новый счетчик " + counterName); // запишем это в файл логов
                 count = 1; // начнем отсчет с 1
             }
+            countMap.put(counterName, count); // сохраняем ключ-значение в хештаблицу
+
+            // настроим автосохранение хештаблицы в файл
+            if (System.currentTimeMillis() - lastSaveTime > interval) {
+                saveState();
+                lastSaveTime = System.currentTimeMillis();
+            }
+
+            // тип содержимого можем не устанавливать т.к. обычно этот сервлет используется как вспомогательный
+            PrintWriter out = response.getWriter();
+            out.print(count);
         }
     }
 }
