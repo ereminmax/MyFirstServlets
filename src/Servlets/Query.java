@@ -1,5 +1,6 @@
 package Servlets;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,7 +51,7 @@ public class Query extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,8 +65,7 @@ public class Query extends HttpServlet {
             "<body>\n" +
             "<h1>Input SQL command below:</h1>\n" +
             "<form>Query: <input name='query'>" +
-            "<input type=submit></form>" +
-            "</body>"
+            "<input type=submit></form>"
         );
 
         // считываем введенные на странице данные из формы
@@ -112,6 +112,17 @@ public class Query extends HttpServlet {
             try {
                 statement.close();
             } catch (Exception ex) {} // завершаем запрос в любом случае
+        } // конец работы с JDBC
+
+        // вызовем сервлет Counter
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Servlets/Counter");
+        if (dispatcher != null) {
+            out.println("<br>Количество посещений страницы: ");
+            // отправим атрубуту сервлета Counter имя текущего класса
+            request.setAttribute("ATTRIBUTE", Query.class.getName());
+            // добавим в текущий сервлет вывод сервлета Counter
+            dispatcher.include(request, response);
         }
-    } // конец работы с JDBC
+        out.println("</body>");
+    }
 }
