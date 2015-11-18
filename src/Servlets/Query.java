@@ -19,10 +19,10 @@ import java.sql.*;
         name = "Query",
         urlPatterns = {"/Query"},
         initParams = {
-                @WebInitParam(name = "driverClassName", value = "test"),
-                @WebInitParam(name = "url", value = "url"),
-                @WebInitParam(name = "username", value = "username"),
-                @WebInitParam(name = "password", value = "password")
+                @WebInitParam(name = "driverClassName", value = "com.mysql.jdbc.Driver"),
+                @WebInitParam(name = "url", value = "jdbc:mysql://localhost:3306/myfirstdbschema"),
+                @WebInitParam(name = "username", value = "root"),
+                @WebInitParam(name = "password", value = "root")
         }
 )
 public class Query extends HttpServlet {
@@ -64,7 +64,7 @@ public class Query extends HttpServlet {
             "</head>\n" +
             "<body>\n" +
             "<h1>Input SQL command below:</h1>\n" +
-            "<form>Query: <input name='query'>" +
+            "<form>Query: <input name='query'>\n" +
             "<input type=submit></form>"
         );
 
@@ -107,7 +107,7 @@ public class Query extends HttpServlet {
             }
             out.println("</table>");
         } catch (SQLException ex) {
-            out.println("Ошибка в запросе SQL " + ex.getMessage());
+            out.println("An error found in SQL query " + ex.getMessage());
         } finally {
             try {
                 statement.close();
@@ -117,9 +117,9 @@ public class Query extends HttpServlet {
         // вызовем сервлет Counter
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Servlets/Counter");
         if (dispatcher != null) {
-            out.println("<br>Количество посещений страницы: ");
+            out.println("<br>Number of visits: ");
             // отправим атрубуту сервлета Counter имя текущего класса
-            request.setAttribute("ATTRIBUTE", Query.class.getName());
+            request.setAttribute("Counter.ATTRIBUTE", Query.class.getName());
             // добавим в текущий сервлет вывод сервлета Counter
             dispatcher.include(request, response);
         }
