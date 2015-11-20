@@ -115,11 +115,11 @@ public class Query extends HttpServlet {
         } // конец работы с JDBC
 
         // вызовем сервлет Counter
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Servlets/Counter");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Counter");
         if (dispatcher != null) {
             out.println("<br>Number of visits: ");
             // отправим атрубуту сервлета Counter имя текущего класса
-            request.setAttribute("Counter.ATTRIBUTE", Query.class.getName());
+            request.setAttribute(Servlets.Counter.ATTRIBUTE, Query.class.getName());
             // добавим в текущий сервлет вывод сервлета Counter
             dispatcher.include(request, response);
         }

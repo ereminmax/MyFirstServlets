@@ -20,7 +20,7 @@ public class Counter extends HttpServlet {
     private long lastSaveTime;
 
     public static final String PARAMETER = "counter";
-    public static final String ATTRIBUTE = "Servlets.Counter.counter";
+    public static final String ATTRIBUTE = "servlets.Counter.counter";
 
     //инициализируем начальные данные
     public void init() throws ServletException {
@@ -76,7 +76,7 @@ public class Counter extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String counterName = request.getParameter(PARAMETER); // считаем имя счетчика из параметра запроса
-        if (counterName == null) request.getAttribute(ATTRIBUTE); // иначе считываем атрибут
+        if (counterName == null) counterName = (String)request.getAttribute(ATTRIBUTE); // иначе считываем атрибут
         if (counterName == null) counterName = request.getRequestURI(); // иначе создадим новый на основе URL
         Integer count; // счетчик
 
