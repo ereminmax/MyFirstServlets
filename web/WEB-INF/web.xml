@@ -17,7 +17,7 @@
         <servlet-class>Servlets.Counter</servlet-class>
         <init-param>
             <param-name>countFile</param-name>
-            <param-value>\web\WEB-INF\tmp\countFile.ser</param-value>
+            <param-value>WEB-INF\tmp\countFile.ser</param-value>
         </init-param>
         <init-param>
             <param-name>interval</param-name>

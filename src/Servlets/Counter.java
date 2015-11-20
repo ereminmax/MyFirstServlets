@@ -44,7 +44,7 @@ public class Counter extends HttpServlet {
 
     // метод сохранения данных в файл. используется сериализация
     private void saveState () throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("countFile")));
+        ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(countFile)));
         out.writeObject(countMap);
         out.close();
     }
@@ -59,7 +59,7 @@ public class Counter extends HttpServlet {
 
         ObjectInputStream in = null;
         try {
-            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("countFile")));
+            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(countFile)));
             countMap = (HashMap) in.readObject();
         } catch (ClassNotFoundException ex) {
             throw new IOException("Ошибка при считывании данных: " + ex.getMessage());
@@ -82,7 +82,7 @@ public class Counter extends HttpServlet {
 
         // синхронизация предотвращает одновременное обновление хештаблицы несколькими потоками
         synchronized (countMap) {
-            count = (Integer) countMap.get("counterName"); // пытаемся извлечь значение счетчика
+            count = (Integer) countMap.get(counterName); // пытаемся извлечь значение счетчика
             if (count != null) count++; // увеличиваем если там чтото было
             else {
                 log("Создаем новый счетчик " + counterName); // запишем название в \logs с именем URL см выше

@@ -107,7 +107,7 @@ public class Query extends HttpServlet {
             }
             out.println("</table>");
         } catch (SQLException ex) {
-            out.println("An error found in SQL query " + ex.getMessage());
+            out.println("An error found in SQL query: " + ex.getMessage());
         } finally {
             try {
                 statement.close();
@@ -119,7 +119,7 @@ public class Query extends HttpServlet {
         if (dispatcher != null) {
             out.println("<br>Number of visits: ");
             // отправим атрубуту сервлета Counter имя текущего класса
-            request.setAttribute(Servlets.Counter.ATTRIBUTE, Query.class.getName());
+            request.setAttribute(Counter.ATTRIBUTE, Query.class.getName());
             // добавим в текущий сервлет вывод сервлета Counter
             dispatcher.include(request, response);
         }
