@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Заявка на подписку</title>
 </head>
 <body>
-<h1>html page</h1>
+<h1>Заявка на подписку</h1>
+<p>Введите свои данные и выберите один из бесплатных курсов. Не забудьте указать дату начала рассылки</p>
+<form method = post action="/subscription">
+    Имя: <input type="text" name="name">
+    Email: <input type="text" name="email">
+    Курс:
+    <select name="course">
+        <option>Как стать Junior</option>
+        <option>Как стать Middle</option>
+        <option>Как стать Senior</option>
+        <option>Как стать TeamLead</option>
+    </select>
+    <input type="submit" value="Отправить">
+</form>
 </body>
 </html>
