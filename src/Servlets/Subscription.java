@@ -39,8 +39,8 @@ public class Subscription extends HttpServlet {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
-            log("Initialization error found: ", e);
-            throw new ServletException("Initialization error found: " + e.getMessage(), e);
+            log("Connection error found: ", e);
+            throw new ServletException("Connection error found: " + e.getMessage(), e);
         }
     }
 
@@ -66,7 +66,7 @@ public class Subscription extends HttpServlet {
         out = response.getWriter();
 
         // Check if all fields are filled
-        if (name == null || email == null || course == null) {
+        if (name.length() * email.length() == 0) {
             out.println(
                 "<head>\n" +
                 "<title>Ошибка</title>\n" +
@@ -75,6 +75,7 @@ public class Subscription extends HttpServlet {
                 "<h1>Проверьте, все ли поля заполнены!</h1>\n" +
                 "</body>"
             );
+            return;
         }
 
         // Add client's data into DB
@@ -83,6 +84,7 @@ public class Subscription extends HttpServlet {
             statement.setString(1, name);
             statement.setString(2, email);
             statement.setString(3, course);
+            statement.execute();
         } catch (SQLException e) {
             out.println("SQL error in statement found: " + e.getMessage());
         } finally {
@@ -91,7 +93,7 @@ public class Subscription extends HttpServlet {
                     statement.close();
                 }
             } catch (Exception e) {
-                out.println("Statement error found: " + e.getMessage());
+                // Close statement anyway
             }
         }
 
